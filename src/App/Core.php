@@ -3,7 +3,7 @@
 namespace App;
 
 use HttpKernel\Router;
-use HttpKernel\Route;
+use HttpKernel\RouteFactory;
 use HttpKernel\Request;
 use HttpKernel\Response;
 use HttpKernel\NotFoundException;
@@ -12,10 +12,10 @@ use Exception;
 class Core {
   private $router;
 
-  public function __construct() {
-    $this->router = new Router;
-    $this->router->addRoute(new Route('GET', '/', array($this, 'default')));
-    $this->router->addRoute(new Route('GET', '/hello', array($this, 'hello')));
+  public function __construct(Router $router, RouteFactory $routeFactory) {
+    $this->router = $router;
+    $this->router->addRoute($routeFactory::createRoute('GET', '/', array($this, 'default')));
+    $this->router->addRoute($routeFactory::createRoute('GET', '/hello', array($this, 'hello')));
   }
 
   public function default() {
@@ -26,8 +26,7 @@ class Core {
     return new Response(200, 'Hello World');
   }
 
-  public function run() {
-    $request = new Request($_SERVER);
+  public function serve(Request $request) {
     try {
       $response = $this->router->serviceRequest($request);
       http_response_code($response->getStatus());

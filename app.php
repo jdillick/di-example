@@ -1,8 +1,11 @@
 <?php
 
-use \App\Core;
-
 require('vendor/autoload.php');
 
-$core = new Core();
-$core->run();
+use \App\Core;
+use HttpKernel\Router;
+use HttpKernel\RouteFactory;
+use HttpKernel\Request;
+
+$core = new Core(new Router, new RouteFactory);
+$core->serve(new Request($_SERVER));
