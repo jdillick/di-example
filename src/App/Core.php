@@ -14,8 +14,8 @@ class Core {
 
   public function __construct(Router $router, RouteFactory $routeFactory) {
     $this->router = $router;
-    $this->router->addRoute($routeFactory::createRoute('GET', '/', array($this, 'default')));
-    $this->router->addRoute($routeFactory::createRoute('GET', '/hello', array($this, 'hello')));
+    $this->router->addRoute($routeFactory::createRoute('GET', '/', [$this, 'default']));
+    $this->router->addRoute($routeFactory::createRoute('GET', '/hello', [$this, 'hello']));
   }
 
   public function default() {
