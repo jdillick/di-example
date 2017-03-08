@@ -14,8 +14,8 @@ class Core {
 
   public function __construct() {
     $this->router = new Router;
-    $this->router->addRoute(new Route('GET', '/', array($this, 'default')));
-    $this->router->addRoute(new Route('GET', '/hello', array($this, 'hello')));
+    $this->router->addRoute(new Route('GET', '/', [$this, 'default']));
+    $this->router->addRoute(new Route('GET', '/hello', [$this, 'hello']));
   }
 
   public function default() {
